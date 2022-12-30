@@ -43,7 +43,7 @@
       },
       'card-badges': function (t, options) {
         let cardAttachments = options.attachments
-        t.get('card', 'shared')
+        return t.get('card', 'shared')
           .then(function (data) {
             console.log(JSON.stringify(data))
             return t.card("name").get("name").then(function (cardName) {
