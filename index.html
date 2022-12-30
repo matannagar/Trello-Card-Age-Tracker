@@ -12,34 +12,29 @@
       'card-buttons': function (t, options) {
         return [
           {
-            icon: './calendar.png',
+            icon: './calender.png',
             text: 'Days since',
             callback: function (t) {
               // Get the current card
-              console.log(t)
               return t.card('id', 'name').then(function (card) {
                 // Calculate the number of days since the card was created
-                // var cardDate = new Date(card.created_at);
-
-                // Create a div element to display the number of days
                 const cardDate = new Date(1000 * parseInt(card.id.substring(0, 8), 16));
-                var currentDate = new Date();
-                var daysSinceCardCreated = Math.floor((currentDate - cardDate) / (1000 * 60 * 60 * 24));
-                var daysSinceCardCreatedElement = document.createElement('div');
-                daysSinceCardCreatedElement.style.fontSize = "small";
-                daysSinceCardCreatedElement.innerHTML = daysSinceCardCreated + " days";
-                alert(daysSinceCardCreated)
+                const currentDate = new Date();
+                const daysSinceCardCreated = Math.floor((currentDate - cardDate) / (1000 * 60 * 60 * 24));
+
                 // Create the badge
-                var badgeText = ""
+                let badgeText = ""
                 if (daysSinceCardCreated == 1) {
                   badgeText = "1 day";
                 } else {
                   badgeText = daysSinceCardCreated + " days";
                 }
-                t.set('card', 'shared', { show: true, badge: badgeText })
+                t.get('card', 'shared').then(function (data) {
+                  t.set('card', 'shared', { show: !data.show, badge: badgeText })
+                })
               })
             }
-          }];
+          }]
       },
       'card-badges': function (t, options) {
         let cardAttachments = options.attachments
