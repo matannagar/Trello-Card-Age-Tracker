@@ -43,28 +43,34 @@
       },
       'card-badges': function (t, options) {
         let cardAttachments = options.attachments
-        return t.get('card', 'shared')
+        t.get('card', 'shared')
           .then(function (data) {
-            console.log(JSON.stringify(data, null, 2));
-          });
-        return t
-          .card("name")
-          .get("name")
-          .then(function (cardName) {
-            console.log("We just loaded the card name for fun: " + cardName)
-            return [
-              {
-                dynamic: function () {
-                  return {
-                    text: "Dynamic " + (Math.random() * 100).toFixed(0).toString(),
-                    icon: "./images/icon.svg",
-                    color: "green",
-                    refresh: 10, // in seconds
-                  }
-                }
-              }
-            ]
+            if (data.show) {
+              return [{
+                text: data.badge,
+                color: 'green'
+              }]
+            }
+            //   return t
+            // .card("name")
+            // .get("name")
+            // .then(function (cardName) {
+            //   console.log("We just loaded the card name for fun: " + cardName)
+            //   return [
+            //     {
+            //       dynamic: function () {
+            //         return {
+            //           text: "Dynamic " + (Math.random() * 100).toFixed(0).toString(),
+            //           icon: "./images/icon.svg",
+            //           color: "green",
+            //           refresh: 10, // in seconds
+            //         }
+            //       }
+            //     }
+            //   ]
+            // })
           })
+
       }
     });
   </script>
