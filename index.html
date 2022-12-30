@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <script src="https://p.trellocdn.com/power-up.min.js"></script>
+  <script>
+    TrelloPowerUp.initialize({
+      'card-buttons': function (t, options) {
+        return [
+          {
+            icon: './calendar.png',
+            text: 'Days since',
+            callback: function (t) {
+              // Get the current card
+              console.log(t)
+              return t.card('id', 'name').then(function (card) {
+                // Calculate the number of days since the card was created
+                // var cardDate = new Date(card.created_at);
+
+                // Create a div element to display the number of days
+                const cardDate = new Date(1000 * parseInt(card.id.substring(0, 8), 16));
+                var currentDate = new Date();
+                var daysSinceCardCreated = Math.floor((currentDate - cardDate) / (1000 * 60 * 60 * 24));
+                var daysSinceCardCreatedElement = document.createElement('div');
+                daysSinceCardCreatedElement.style.fontSize = "small";
+                daysSinceCardCreatedElement.innerHTML = daysSinceCardCreated + " days";
+                alert(daysSinceCardCreated)
+
+                // Create the badge
+                var badgeText = ""
+                if (daysSinceCardCreated == 1) {
+                  badgeText = "1 day";
+                } else {
+                  badgeText = daysSinceCardCreated + " days";
+                }
+              })
+            }
+          }];
+      },
+      'card-badges': function (t, options) {
+        let cardAttachments = options.attachments
+        console.log(t)
+        console.log(options)
+        console.log(cardAttachments)
+        return t
+          .card("name")
+          .get("name")
+          .then(function (cardName) {
+            console.log("We just loaded the card name for fun: " + cardName)
+            return [
+              {
+                dynamic: function () {
+                  return {
+                    text: "Dynamic " + (Math.random() * 100).toFixed(0).toString(),
+                    icon: "./images/icon.svg",
+                    color: "green",
+                    refresh: 10, // in seconds
+                  }
+                }
+              }
+            ]
+          })
+      }
+    });
+  </script>
+</body>
+
+</html>
