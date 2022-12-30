@@ -45,22 +45,22 @@
         let cardAttachments = options.attachments
         t.get('card', 'shared')
           .then(function (data) {
-            if (data.show) {
-              return t.card("name").get("name").then(function (cardName) {
-                return [
-                  {
-                    dynamic: function () {
-                      return {
-                        text: "Dynamic " + (Math.random() * 100).toFixed(0).toString(),
-                        icon: "./images/icon.svg",
-                        color: "green",
-                        refresh: 10, // in seconds
-                      }
+            console.log(JSON.stringify(data))
+            return t.card("name").get("name").then(function (cardName) {
+              return [
+                {
+                  dynamic: function () {
+                    return {
+                      text: "Dynamic " + (Math.random() * 100).toFixed(0).toString(),
+                      icon: "./images/icon.svg",
+                      color: "green",
+                      refresh: 10, // in seconds
                     }
                   }
-                ]
-              })
-            }
+                }
+              ]
+              )
+          }
           })
       }
     });
