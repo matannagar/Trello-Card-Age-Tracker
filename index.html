@@ -36,16 +36,13 @@
                 } else {
                   badgeText = daysSinceCardCreated + " days";
                 }
-                t.set('card', 'shared', { show: true, badgeText: badgeText })
+                t.set('card', 'shared', { show: true, badge: badgeText })
               })
             }
           }];
       },
       'card-badges': function (t, options) {
         let cardAttachments = options.attachments
-        console.log(t)
-        console.log(options)
-        console.log(cardAttachments)
         return t.get('card', 'shared')
           .then(function (data) {
             console.log(JSON.stringify(data, null, 2));
