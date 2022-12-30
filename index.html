@@ -29,7 +29,6 @@
                 daysSinceCardCreatedElement.style.fontSize = "small";
                 daysSinceCardCreatedElement.innerHTML = daysSinceCardCreated + " days";
                 alert(daysSinceCardCreated)
-
                 // Create the badge
                 var badgeText = ""
                 if (daysSinceCardCreated == 1) {
@@ -37,6 +36,7 @@
                 } else {
                   badgeText = daysSinceCardCreated + " days";
                 }
+                t.set('card', 'shared', { show: true, badgeText: badgeText })
               })
             }
           }];
@@ -46,6 +46,10 @@
         console.log(t)
         console.log(options)
         console.log(cardAttachments)
+        return t.get('card', 'shared')
+          .then(function (data) {
+            console.log(JSON.stringify(data, null, 2));
+          });
         return t
           .card("name")
           .get("name")
