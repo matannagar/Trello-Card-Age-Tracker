@@ -46,31 +46,22 @@
         t.get('card', 'shared')
           .then(function (data) {
             if (data.show) {
-              return [{
-                text: data.badge,
-                color: 'green'
-              }]
+              return t.card("name").get("name").then(function (cardName) {
+                return [
+                  {
+                    dynamic: function () {
+                      return {
+                        text: "Dynamic " + (Math.random() * 100).toFixed(0).toString(),
+                        icon: "./images/icon.svg",
+                        color: "green",
+                        refresh: 10, // in seconds
+                      }
+                    }
+                  }
+                ]
+              })
             }
-            //   return t
-            // .card("name")
-            // .get("name")
-            // .then(function (cardName) {
-            //   console.log("We just loaded the card name for fun: " + cardName)
-            //   return [
-            //     {
-            //       dynamic: function () {
-            //         return {
-            //           text: "Dynamic " + (Math.random() * 100).toFixed(0).toString(),
-            //           icon: "./images/icon.svg",
-            //           color: "green",
-            //           refresh: 10, // in seconds
-            //         }
-            //       }
-            //     }
-            //   ]
-            // })
           })
-
       }
     });
   </script>
