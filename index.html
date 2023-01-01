@@ -6,9 +6,11 @@
 </head>
 
 <body>
+  <!-- Load the Trello Power-Up library -->
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
     TrelloPowerUp.initialize({
+      // Add a button to each card
       'card-buttons': function (t, options) {
         return [
           {
@@ -29,6 +31,7 @@
                 } else {
                   badgeText = daysSinceCardCreated + " days";
                 }
+                // Set the badge text in the card's shared data
                 t.get('card', 'shared').then(function (data) {
                   t.set('card', 'shared', { show: !data.show, badge: badgeText })
                 })
@@ -36,10 +39,12 @@
             }
           }]
       },
+      // Display the badge on the card
       'card-badges': function (t, options) {
         let cardAttachments = options.attachments
         return t.get('card', 'shared')
           .then(function (data) {
+            //  If the show property of the shared data is set to true, display the badge
             console.log(JSON.stringify(data))
             if (data.show) {
               return t.card("name").get("name").then(function (cardName) {
@@ -53,8 +58,7 @@
                         refresh: 10, // in seconds
                       }
                     }
-                  }
-                ]
+                  }]
               })
             }
           })
