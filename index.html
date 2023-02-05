@@ -37,7 +37,8 @@
           .then(function (data) {
             //  If the show property of the shared data is set to true, display the badge
             function getDaysSinceCardCreated() {
-              return Math.floor((currentDate - data.daysSinceCardCreated) / (1000 * 60 * 60 * 24));
+              const currentDate = new Date();
+              return Math.floor((currentDate - cardDate) / (1000 * 60 * 60 * 24));
             }
             if (data.show) {
               return t.card("name").get("name").then(function (cardName) {
@@ -45,7 +46,7 @@
                   {
                     dynamic: function () {
                       return {
-                        text: getDaysSinceCardCreated() + " days",
+                        text: daysSinceCardCreated() + " days",
                         icon: "./calender.png",
                         color: "green",
                         refresh: 23 * 60 * 60, // in seconds
