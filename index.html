@@ -20,20 +20,11 @@
               // Get the current card
               return t.card('id', 'name').then(function (card) {
                 // Calculate the number of days since the card was created
-                const cardDate = new Date(1000 * parseInt(card.id.substring(0, 8), 16));
-                const currentDate = new Date();
-                const daysSinceCardCreated = Math.floor((currentDate - cardDate) / (1000 * 60 * 60 * 24));
+                const createDate = new Date(1000 * parseInt(card.id.substring(0, 8), 16));
 
-                // Create the badge
-                let badgeText = ""
-                if (daysSinceCardCreated == 1) {
-                  badgeText = "1 day";
-                } else {
-                  badgeText = daysSinceCardCreated + " days";
-                }
                 // Set the badge text in the card's shared data
                 t.get('card', 'shared').then(function (data) {
-                  t.set('card', 'shared', { show: !data.show, badge: badgeText })
+                  t.set('card', 'shared', { show: !(!!data.show), daysSinceCardCreated: createDate })
                 })
               })
             }
@@ -45,17 +36,19 @@
         return t.get('card', 'shared')
           .then(function (data) {
             //  If the show property of the shared data is set to true, display the badge
-            console.log(JSON.stringify(data))
+            function getDaysSinceCardCreated() {
+              return Math.floor((currentDate - data.createDate) / (1000 * 60 * 60 * 24));
+            }
             if (data.show) {
               return t.card("name").get("name").then(function (cardName) {
                 return [
                   {
                     dynamic: function () {
                       return {
-                        text: data.badge,
+                        text: daysSinceCardCreated() + " days",
                         icon: "./calender.png",
                         color: "green",
-                        refresh: 10, // in seconds
+                        refresh: 23 * 60 * 60, // in seconds
                       }
                     }
                   }]
@@ -63,7 +56,7 @@
             }
           })
       }
-    });
+    })
   </script>
 </body>
 
